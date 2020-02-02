@@ -1,0 +1,22 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/acoustically/Workspace/Project/backward-file-reader/src/backward-file-reader.cc
+backward-file-reader/backward-file-reader.hh
+-
+cstring
+-
+iostream
+-
+
+include/backward-file-reader/backward-file-reader.hh
+fstream
+-
+string
+-
+

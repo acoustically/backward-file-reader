@@ -1,0 +1,2 @@
+/usr/bin/ar qc lib/libbackward-file-reader.a  CMakeFiles/backward-file-reader.dir/src/backward-file-reader.cc.o
+/usr/bin/ranlib lib/libbackward-file-reader.a

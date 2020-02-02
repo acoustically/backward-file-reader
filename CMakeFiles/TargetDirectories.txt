@@ -1,0 +1,3 @@
+/home/acoustically/Workspace/Project/backward-file-reader/CMakeFiles/rebuild_cache.dir
+/home/acoustically/Workspace/Project/backward-file-reader/CMakeFiles/backward-file-reader.dir
+/home/acoustically/Workspace/Project/backward-file-reader/CMakeFiles/edit_cache.dir
