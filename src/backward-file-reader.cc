@@ -1,5 +1,6 @@
 #include <backward-file-reader/backward-file-reader.hh>
 #include <cstring>
+#include <cstdio>
 
 //TEST
 #include <iostream>
@@ -11,7 +12,7 @@ const long BackwardFileReader::DEFAULT_BUFFER_LENGTH_(8192);
 
 BackwardFileReader::BackwardFileReader(const std::string& filename) 
     : fin_(filename, std::ios::in | std::ios::binary | std::ios::ate)
-    , file_length_(fin_.tellg() - 1l)
+    , file_length_(fin_.tellg())
     , data_length_(0)
     , buffer_length_(0)
     , cursor_(0)
@@ -38,7 +39,7 @@ bool BackwardFileReader::IsEof() {
   return false;
 }
 
-int BackwardFileReader::FitBufferLength(const int& buffer_length) {
+long BackwardFileReader::FitBufferLength(const long& buffer_length) {
   if(buffer_length > file_length_) {
     return file_length_;
   } else {
@@ -49,9 +50,11 @@ int BackwardFileReader::FitBufferLength(const int& buffer_length) {
 void BackwardFileReader::ExpandBuffer() {
   long new_buffer_length = FitBufferLength(buffer_length_ * 2);
   char* new_buffer = new char[new_buffer_length + 1];
-  new_buffer[new_buffer_length + 1] = '\0';
   memset(new_buffer, '\0', new_buffer_length + 1);
-  std::copy(buffer_, buffer_ + buffer_length_, new_buffer + buffer_length_);
+  std::copy(
+        buffer_
+      , buffer_ + buffer_length_
+      , new_buffer + (new_buffer_length - buffer_length_));
   delete[] buffer_;
   
   buffer_ = new_buffer;
@@ -60,7 +63,8 @@ void BackwardFileReader::ExpandBuffer() {
 
 void BackwardFileReader::InitBuffer() {
   buffer_length_ = FitBufferLength(DEFAULT_BUFFER_LENGTH_);
-  buffer_ = new char[buffer_length_];
+  buffer_ = new char[buffer_length_ + 1];
+  memset(buffer_, '\0', buffer_length_ + 1);
 }
 
 void BackwardFileReader::FillBuffer() {
@@ -100,9 +104,11 @@ long BackwardFileReader::GetLineLength() {
       FillBuffer();
       continue;
     }
-      
     cursor_++;
     if( buffer_[i] == '\n') {
+      if(i == data_length_ - 1) {
+        continue;
+      }
       return length;
     } else if(!(length == 0 && buffer_[i] == '\r')) {
       length++;

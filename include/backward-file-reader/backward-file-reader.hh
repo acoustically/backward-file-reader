@@ -25,7 +25,7 @@ class BackwardFileReader {
     long buffer_length_;
     long cursor_;
 
-    int FitBufferLength(const int& length);
+    long FitBufferLength(const long& length);
     void ExpandBuffer();
     void InitBuffer();
     void FillBuffer();

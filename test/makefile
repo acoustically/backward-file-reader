@@ -5,4 +5,4 @@ INCLUDE = -I../include
 LIBS = -std=c++17 -lbackward-file-reader
 
 all:
-	$(CXX) $(main).cc -o $(BIN)/$(main) $(LIBS_DIR) $(LIBS) $(INCLUDE) -g
+	$(CXX) $(main).cc -o $(BIN)/$(main) $(LIBS_DIR) $(LIBS) $(INCLUDE) -O3
